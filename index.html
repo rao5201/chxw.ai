@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>茶海虾王 - AI商业机会快速连接</title>
+<!-- Supabase JS SDK (数据库连接) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -532,6 +534,108 @@ const DEFAULT_ADSLOTS = [
   { id:11, position:"页脚Banner-1", status:"available" },
   { id:12, position:"页脚Banner-2", status:"available" }
 ];
+
+// ================== Supabase 数据库连接层 ==================
+// 配置: 替换为你的 Supabase 项目信息，或留空使用 localStorage 模式
+const SUPABASE_URL = '';   // 例: 'https://xxxx.supabase.co'
+const SUPABASE_ANON_KEY = ''; // 你的 anon public key
+const API_BASE = '';       // Vercel API 地址，例: 'https://chxw-ai.vercel.app'
+
+let supabaseClient = null;
+let useSupabase = false;
+
+// 初始化 Supabase 连接
+if (SUPABASE_URL && SUPABASE_ANON_KEY && typeof supabase !== 'undefined') {
+  try {
+    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    useSupabase = true;
+    console.log('✅ Supabase 数据库已连接');
+  } catch(e) {
+    console.warn('⚠️ Supabase 连接失败，使用 localStorage 模式', e);
+  }
+} else {
+  console.log('ℹ️ 使用 localStorage 本地数据库模式');
+}
+
+/** 从 Supabase 加载数据 */
+async function loadFromSupabase() {
+  try {
+    const [projRes, adsRes, affRes, slotRes] = await Promise.all([
+      supabaseClient.from('projects').select('*').eq('is_active', true).order('sort_order'),
+      supabaseClient.from('ads').select('*').eq('is_active', true).order('created_at', { ascending: false }),
+      supabaseClient.from('affiliates').select('*').eq('is_active', true).order('sort_order'),
+      supabaseClient.from('ad_slots').select('*').order('slot_number')
+    ]);
+    if (projRes.data) projectsData = projRes.data.map(p => ({
+      id: p.id, name: p.name, category: p.category, mrr: p.mrr, growth: p.growth,
+      desc: p.description, tags: p.tags || [], icon: p.icon, link: p.link, actionText: p.action_text
+    }));
+    if (adsRes.data) adsData = adsRes.data.map(a => ({
+      id: a.id, platform: a.platform, title: a.title, days: a.days_running, likes: a.likes,
+      shares: a.shares, thumbnail: a.thumbnail, originalLink: a.original_link, landingPage: a.final_landing
+    }));
+    if (affRes.data) affiliateData = affRes.data.map(a => ({
+      id: a.id, name: a.name, commission: a.commission, cookie: a.cookie_period,
+      assets: a.assets, link: a.link, tags: []
+    }));
+    if (slotRes.data) adSlotsData = slotRes.data.map(s => ({
+      id: s.slot_number, position: `广告位 #${String(s.slot_number).padStart(2,'0')}`,
+      status: s.status, advertiser: s.advertiser_name || '', contact: s.contact_email || ''
+    }));
+    console.log('✅ 从 Supabase 加载了', projectsData.length, '个项目');
+    // 同步到 localStorage 作为缓存
+    saveToLocalStorage();
+    return true;
+  } catch(e) {
+    console.error('❌ Supabase 加载失败:', e);
+    return false;
+  }
+}
+
+/** Supabase 写入操作 */
+async function supabaseSave(table, data, id) {
+  if (!useSupabase) return false;
+  try {
+    if (id) {
+      await supabaseClient.from(table).update(data).eq('id', id);
+    } else {
+      await supabaseClient.from(table).insert(data);
+    }
+    return true;
+  } catch(e) { console.error('Supabase 写入失败:', e); return false; }
+}
+
+async function supabaseDelete(table, id) {
+  if (!useSupabase) return false;
+  try {
+    await supabaseClient.from(table).update({ is_active: false }).eq('id', id);
+    return true;
+  } catch(e) { console.error('Supabase 删除失败:', e); return false; }
+}
+
+/** 记录访客到 Supabase */
+async function trackVisitorSupabase() {
+  if (!useSupabase) return;
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    await supabaseClient.rpc('increment_visitor', { visit_date: today }).catch(() => {
+      // 如果 RPC 不存在，直接 upsert
+      supabaseClient.from('visitor_stats').upsert(
+        { date: today, page_views: 1 },
+        { onConflict: 'date', count: 'exact' }
+      );
+    });
+  } catch(e) { /* 静默 */ }
+}
+
+/** 提交联系表单到 Supabase */
+async function submitContactSupabase(name, email, message, type) {
+  if (!useSupabase) return false;
+  try {
+    await supabaseClient.from('contacts').insert({ name, email, message, type });
+    return true;
+  } catch(e) { return false; }
+}
 
 // ================== 状态管理 ==================
 
@@ -1204,13 +1308,32 @@ function incrementVisitor() {
 
 // ================== 初始化 ==================
 
-document.addEventListener('DOMContentLoaded', function() {
-  // 加载数据
-  loadFromLocalStorage();
+document.addEventListener('DOMContentLoaded', async function() {
+  // 优先从 Supabase 加载，失败则回退到 localStorage
+  if (useSupabase) {
+    const ok = await loadFromSupabase();
+    if (!ok) loadFromLocalStorage();
+    trackVisitorSupabase();
+  } else {
+    loadFromLocalStorage();
+  }
   // 渲染全部
   renderAll();
   // 访客计数
   incrementVisitor();
+  // 数据库状态指示
+  const dbBadge = document.createElement('div');
+  dbBadge.style.cssText = 'position:fixed;bottom:12px;right:12px;padding:4px 10px;border-radius:20px;font-size:11px;z-index:9999;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);';
+  if (useSupabase) {
+    dbBadge.style.background = 'rgba(16,185,129,0.15)';
+    dbBadge.style.color = '#10b981';
+    dbBadge.innerHTML = '<i class="fa-solid fa-database"></i> Supabase 已连接';
+  } else {
+    dbBadge.style.background = 'rgba(59,130,246,0.15)';
+    dbBadge.style.color = '#3b82f6';
+    dbBadge.innerHTML = '<i class="fa-solid fa-hard-drive"></i> localStorage 模式';
+  }
+  document.body.appendChild(dbBadge);
   // 点击模态框外部关闭
   document.getElementById('modal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
