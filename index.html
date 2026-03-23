@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>茶海虾王 - AI商业机会快速连接</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ========== 基础样式 ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0f172a; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+/* 玻璃面板效果 */
+.glass-panel {
+  background: rgba(30,41,59,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 1rem;
+}
+/* 渐变文字 */
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-gold {
+  background: linear-gradient(135deg, #f59e0b, #eab308);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* 导航栏玻璃效果 */
+.nav-glass {
+  background: rgba(15,23,42,0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+/* 卡片悬停效果 */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(59,130,246,0.1);
+}
+/* 按钮发光动画 */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.btn-glow:hover {
+  box-shadow: 0 0 20px rgba(59,130,246,0.4);
+}
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: rotate(45deg);
+  transition: all 0.5s;
+  opacity: 0;
+}
+.btn-glow:hover::after { opacity: 1; }
+/* 广告位样式 */
+.ad-slot-available {
+  border: 2px dashed rgba(245,158,11,0.5);
+  background: rgba(245,158,11,0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.ad-slot-available:hover {
+  border-color: #f59e0b;
+  background: rgba(245,158,11,0.12);
+  box-shadow: 0 0 20px rgba(245,158,11,0.2);
+}
+.ad-slot-taken {
+  border: 2px solid rgba(34,197,94,0.4);
+  background: rgba(34,197,94,0.08);
+  opacity: 0.7;
+}
+/* 搜索框发光 */
+.search-glow:focus-within {
+  box-shadow: 0 0 30px rgba(59,130,246,0.3), 0 0 60px rgba(139,92,246,0.15);
+}
+/* 自定义滚动条 */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #1e293b; }
+::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #64748b; }
+/* Toast通知 */
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem;
+  padding: 1rem 1.5rem; border-radius: 0.75rem;
+  background: rgba(34,197,94,0.9); color: white;
+  font-weight: 600; z-index: 9999;
+  transform: translateY(100px); opacity: 0;
+  transition: all 0.4s ease;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+/* 模态框 */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 5vh;
+  overflow-y: auto;
+}
+.modal-overlay.active { display: flex; }
+.modal-box {
+  background: #1e293b;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 90%;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+/* 标签高亮 */
+.filter-tag { transition: all 0.2s ease; }
+.filter-tag.active { background: #3b82f6 !important; color: white !important; }
+/* 管理后台标签 */
+.admin-tab { cursor: pointer; padding: 0.5rem 1rem; border-radius: 0.5rem; transition: all 0.2s; }
+.admin-tab.active { background: #3b82f6; color: white; }
+.admin-tab:not(.active):hover { background: rgba(59,130,246,0.2); }
+/* 平台徽章 */
+.badge-tiktok { background: linear-gradient(135deg, #000, #333); }
+.badge-facebook { background: linear-gradient(135deg, #1877f2, #42a5f5); }
+/* 加载动画 */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { animation: spin 1s linear infinite; }
+/* 区域标题 */
+.section-title { position: relative; display: inline-block; }
+.section-title::after {
+  content: '';
+  position: absolute; bottom: -8px; left: 0;
+  width: 60px; height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 2px;
+}
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<!-- Toast通知容器 -->
+<div id="toast" class="toast"></div>
+
+<!-- 模态框 -->
+<div id="modal" class="modal-overlay">
+  <div class="modal-box" id="modalContent"></div>
+</div>
+
+<!-- ========== 导航栏 ========== -->
+<nav class="nav-glass fixed top-0 left-0 right-0 z-50 px-4 py-3">
+  <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-2">
+    <div class="flex items-center gap-2">
+      <i class="fa-solid fa-shrimp text-2xl text-blue-400"></i>
+      <span class="text-xl font-bold text-white">茶海虾王</span>
+      <span class="text-xs text-slate-400 hidden sm:inline">AI商业机会快速连接</span>
+    </div>
+    <div class="flex items-center gap-1 flex-wrap text-sm" id="navTabs">
+      <a href="#projects" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition text-slate-300 hover:text-white">🚀 高收益项目</a>
+      <a href="#ads-spy" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition text-slate-300 hover:text-white">🕵️ 广告间谍</a>
+      <a href="#affiliate" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition text-slate-300 hover:text-white">🤝 联盟后台</a>
+      <a href="#ad-spaces" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition text-slate-300 hover:text-white">📢 广告招商</a>
+      <a href="#" onclick="toggleAdmin();return false;" class="px-3 py-1.5 rounded-lg hover:bg-white/10 transition text-slate-300 hover:text-white">🔐 管理后台</a>
+    </div>
+    <a href="mailto:rao5201@126.com" class="btn-glow bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded-lg font-medium">
+      <i class="fa-solid fa-envelope mr-1"></i>广告合作
+    </a>
+  </div>
+</nav>
+
+<!-- ========== Hero区域 ========== -->
+<section class="pt-28 pb-16 px-4 relative overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-transparent pointer-events-none"></div>
+  <div class="max-w-4xl mx-auto text-center relative z-10">
+    <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight">
+      发现 <span class="gradient-text">隐形冠军</span> · 一键直达 <span class="gradient-text">财富源头</span>
+    </h1>
+    <p class="text-slate-400 text-lg mb-8 max-w-2xl mx-auto">深度分析全球AI创业项目、广告创意与联盟计划，为你精选最具商业价值的AI赚钱机会</p>
+    <div class="glass-panel search-glow flex items-center gap-2 max-w-xl mx-auto p-2 mb-6 transition-all duration-300">
+      <i class="fa-solid fa-magnifying-glass text-slate-400 ml-3"></i>
+      <input id="searchInput" type="text" placeholder="搜索AI项目、广告创意、联盟计划..."
+        class="flex-1 bg-transparent border-none outline-none text-white placeholder-slate-500 text-base py-2"
+        onkeydown="if(event.key==='Enter')performSearch()">
+      <button onclick="performSearch()" class="btn-glow bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-medium text-sm">
+        <i class="fa-solid fa-bolt mr-1"></i>搜索
+      </button>
+    </div>
+    <div class="flex items-center justify-center gap-2 flex-wrap text-sm">
+      <span class="text-slate-500">热门:</span>
+      <button onclick="filterTags('SaaS')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">高MRR SaaS</button>
+      <button onclick="filterTags('TikTok')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">TikTok爆款</button>
+      <button onclick="filterTags('高佣金')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">高佣联盟</button>
+      <button onclick="filterTags('APP')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">暴利APP</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 数据统计栏 ========== -->
+<section class="px-4 pb-12">
+  <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="glass-panel p-5 border-l-4 border-blue-500">
+      <div class="text-sm text-slate-400 mb-1">已收录项目</div>
+      <div class="text-2xl font-bold text-white">1,240</div>
+      <div class="text-xs text-green-400 mt-1">+12 今日</div>
+    </div>
+    <div class="glass-panel p-5 border-l-4 border-purple-500">
+      <div class="text-sm text-slate-400 mb-1">平均MRR</div>
+      <div class="text-2xl font-bold text-white">$38,500</div>
+      <div class="text-xs text-green-400 mt-1">+8.2% 月增</div>
+    </div>
+    <div class="glass-panel p-5 border-l-4 border-amber-500">
+      <div class="text-sm text-slate-400 mb-1">活跃广告创意</div>
+      <div class="text-2xl font-bold text-white">8,902</div>
+      <div class="text-xs text-green-400 mt-1">+156 今日</div>
+    </div>
+    <div class="glass-panel p-5 border-l-4 border-green-500">
+      <div class="text-sm text-slate-400 mb-1">可用联盟链接</div>
+      <div class="text-2xl font-bold text-white">456</div>
+      <div class="text-xs text-green-400 mt-1">+23 本周</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 高收益AI项目 ========== -->
+<section id="projects" class="px-4 pb-16">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex items-center justify-between mb-8 flex-wrap gap-4">
+      <h2 class="text-2xl font-bold text-white section-title">🚀 高收益AI项目直达</h2>
+      <div class="flex gap-2 flex-wrap text-sm" id="projectFilters">
+        <button onclick="filterTags('')" class="filter-tag active px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">全部</button>
+        <button onclick="filterTags('SaaS')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">SaaS</button>
+        <button onclick="filterTags('API')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">API</button>
+        <button onclick="filterTags('APP')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">APP</button>
+        <button onclick="filterTags('Plugin')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">Plugin</button>
+        <button onclick="filterTags('Enterprise')" class="filter-tag px-3 py-1 rounded-full bg-white/5 text-slate-300 hover:bg-blue-600 hover:text-white transition">Enterprise</button>
+      </div>
+    </div>
+    <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </div>
+</section>
+
+<!-- ========== 广告创意与落地页透视 ========== -->
+<section id="ads-spy" class="px-4 pb-16">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-2xl font-bold text-white section-title mb-8">🕵️ 广告创意与落地页透视</h2>
+    <div id="adsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+  </div>
+</section>
+
+<!-- ========== 联盟计划后台 ========== -->
+<section id="affiliate" class="px-4 pb-16">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-2xl font-bold text-white section-title mb-8">🤝 联盟计划后台</h2>
+    <div class="glass-panel overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-white/10">
+            <th class="text-left p-4 text-slate-400 font-medium">项目名称</th>
+            <th class="text-left p-4 text-slate-400 font-medium">佣金结构</th>
+            <th class="text-left p-4 text-slate-400 font-medium">Cookie周期</th>
+            <th class="text-left p-4 text-slate-400 font-medium">推广素材包</th>
+            <th class="text-left p-4 text-slate-400 font-medium">快速行动</th>
+          </tr>
+        </thead>
+        <tbody id="affiliateTable"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 必备工具箱 ========== -->
+<section id="toolbox" class="px-4 pb-16">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-2xl font-bold text-white section-title mb-8">🧰 必备工具箱</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <a href="https://www.similarweb.com" target="_blank" class="glass-panel card-hover p-5 text-center group">
+        <i class="fa-solid fa-chart-line text-3xl text-blue-400 mb-3 group-hover:scale-110 transition-transform"></i>
+        <div class="text-white font-semibold text-sm">SimilarWeb</div>
+        <div class="text-slate-500 text-xs mt-1">流量分析</div>
+      </a>
+      <a href="https://ads.tiktok.com/business/creativecenter" target="_blank" class="glass-panel card-hover p-5 text-center group">
+        <i class="fa-brands fa-tiktok text-3xl text-pink-400 mb-3 group-hover:scale-110 transition-transform"></i>
+        <div class="text-white font-semibold text-sm">TikTok Creative</div>
+        <div class="text-slate-500 text-xs mt-1">创意中心</div>
+      </a>
+      <a href="https://www.facebook.com/ads/library" target="_blank" class="glass-panel card-hover p-5 text-center group">
+        <i class="fa-brands fa-facebook text-3xl text-blue-500 mb-3 group-hover:scale-110 transition-transform"></i>
+        <div class="text-white font-semibold text-sm">FB Ad Library</div>
+        <div class="text-slate-500 text-xs mt-1">广告库</div>
+      </a>
+      <a href="https://www.data.ai" target="_blank" class="glass-panel card-hover p-5 text-center group">
+        <i class="fa-solid fa-mobile-screen text-3xl text-green-400 mb-3 group-hover:scale-110 transition-transform"></i>
+        <div class="text-white font-semibold text-sm">data.ai</div>
+        <div class="text-slate-500 text-xs mt-1">应用分析</div>
+      </a>
+      <a href="https://ahrefs.com" target="_blank" class="glass-panel card-hover p-5 text-center group">
+        <i class="fa-solid fa-link text-3xl text-orange-400 mb-3 group-hover:scale-110 transition-transform"></i>
+        <div class="text-white font-semibold text-sm">Ahrefs</div>
+        <div class="text-slate-500 text-xs mt-1">SEO工具</div>
+      </a>
+      <a href="https://www.producthunt.com" target="_blank" class="glass-panel card-hover p-5 text-center group">
+        <i class="fa-solid fa-rocket text-3xl text-red-400 mb-3 group-hover:scale-110 transition-transform"></i>
+        <div class="text-white font-semibold text-sm">Product Hunt</div>
+        <div class="text-slate-500 text-xs mt-1">新品发现</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 广告位招商 ========== -->
+<section id="ad-spaces" class="px-4 pb-16">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-8">
+      <h2 class="text-2xl font-bold gradient-text-gold section-title mb-3">📢 12席广告位招商</h2>
+      <p class="text-slate-400 text-sm">精准触达AI创业者与投资人群体 · 每日UV 10,000+</p>
+    </div>
+    <div id="adSlotsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8"></div>
+    <div class="text-center">
+      <a href="mailto:rao5201@126.com?subject=广告位预订-全部席位" class="inline-block btn-glow bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-bold px-8 py-3 rounded-xl text-sm hover:from-amber-400 hover:to-yellow-400 transition">
+        <i class="fa-solid fa-crown mr-2"></i>联系管理员预订全部席位
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 管理后台 ========== -->
+<section id="admin" class="px-4 pb-16 hidden">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-2xl font-bold text-white section-title mb-8">🔐 管理后台</h2>
+    <!-- 登录面板 -->
+    <div id="adminLogin" class="glass-panel p-8 max-w-md mx-auto text-center">
+      <i class="fa-solid fa-lock text-4xl text-blue-400 mb-4"></i>
+      <p class="text-slate-400 mb-4">请输入管理密码</p>
+      <div class="flex gap-2">
+        <input id="adminPwd" type="password" placeholder="管理密码"
+          class="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-blue-500 transition"
+          onkeydown="if(event.key==='Enter')adminLoginAction()">
+        <button onclick="adminLoginAction()" class="btn-glow bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-medium text-sm">解锁</button>
+      </div>
+      <p id="loginError" class="text-red-400 text-sm mt-2 hidden">密码错误，请重试</p>
+    </div>
+    <!-- 管理面板 (登录后显示) -->
+    <div id="adminPanel" class="hidden">
+      <div class="glass-panel p-6 mb-6">
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-6">
+          <div class="flex gap-2 flex-wrap" id="adminTabs">
+            <button onclick="switchAdminTab('projects')" class="admin-tab active" data-tab="projects">项目管理</button>
+            <button onclick="switchAdminTab('ads')" class="admin-tab" data-tab="ads">广告管理</button>
+            <button onclick="switchAdminTab('affiliate')" class="admin-tab" data-tab="affiliate">联盟管理</button>
+            <button onclick="switchAdminTab('adslots')" class="admin-tab" data-tab="adslots">广告位管理</button>
+            <button onclick="switchAdminTab('settings')" class="admin-tab" data-tab="settings">网站设置</button>
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="exportData()" class="bg-green-600 hover:bg-green-500 text-white text-xs px-3 py-1.5 rounded-lg"><i class="fa-solid fa-download mr-1"></i>导出JSON</button>
+            <button onclick="document.getElementById('importFile').click()" class="bg-purple-600 hover:bg-purple-500 text-white text-xs px-3 py-1.5 rounded-lg"><i class="fa-solid fa-upload mr-1"></i>导入JSON</button>
+            <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
+            <button onclick="resetToDefaults()" class="bg-red-600 hover:bg-red-500 text-white text-xs px-3 py-1.5 rounded-lg"><i class="fa-solid fa-rotate-left mr-1"></i>重置默认</button>
+          </div>
+        </div>
+        <div id="adminContent"></div>
+      </div>
+      <!-- 访客统计 -->
+      <div class="glass-panel p-6">
+        <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-chart-bar mr-2 text-blue-400"></i>访客统计</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-white/5 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-white" id="totalVisits">0</div>
+            <div class="text-xs text-slate-400 mt-1">总访问量</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-white" id="totalEmails">0</div>
+            <div class="text-xs text-slate-400 mt-1">邮件订阅数</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-white" id="totalContacts">0</div>
+            <div class="text-xs text-slate-400 mt-1">联系表单数</div>
+          </div>
+          <div class="bg-white/5 rounded-lg p-4 text-center">
+            <div class="text-2xl font-bold text-white" id="dataModified">-</div>
+            <div class="text-xs text-slate-400 mt-1">最后修改</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Newsletter / 联系区域 ========== -->
+<section class="px-4 pb-16">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- 邮件订阅 -->
+    <div class="glass-panel p-8">
+      <h3 class="text-xl font-bold text-white mb-2"><i class="fa-solid fa-envelope-open-text mr-2 text-blue-400"></i>订阅AI商业周报</h3>
+      <p class="text-slate-400 text-sm mb-6">每周精选最赚钱AI项目 & 最新商业趋势</p>
+      <div class="flex gap-2">
+        <input id="newsletterEmail" type="email" placeholder="your@email.com"
+          class="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white outline-none focus:border-blue-500 transition text-sm">
+        <button onclick="collectEmail()" class="btn-glow bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-lg font-medium text-sm whitespace-nowrap">
+          <i class="fa-solid fa-paper-plane mr-1"></i>订阅
+        </button>
+      </div>
+    </div>
+    <!-- 联系表单 -->
+    <div class="glass-panel p-8">
+      <h3 class="text-xl font-bold text-white mb-2"><i class="fa-solid fa-comments mr-2 text-purple-400"></i>商业合作咨询</h3>
+      <p class="text-slate-400 text-sm mb-4">广告投放、项目合作、定制需求</p>
+      <div class="space-y-3">
+        <input id="contactName" type="text" placeholder="您的姓名"
+          class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-purple-500 transition text-sm">
+        <input id="contactEmail" type="email" placeholder="联系邮箱"
+          class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-purple-500 transition text-sm">
+        <textarea id="contactMsg" placeholder="请描述您的需求..." rows="3"
+          class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white outline-none focus:border-purple-500 transition text-sm resize-none"></textarea>
+        <button onclick="submitContact()" class="btn-glow bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-lg font-medium text-sm">
+          <i class="fa-solid fa-paper-plane mr-1"></i>发送消息
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 页脚 ========== -->
+<footer class="border-t border-white/5 px-4 py-12">
+  <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <i class="fa-solid fa-shrimp text-xl text-blue-400"></i>
+        <span class="text-lg font-bold text-white">茶海虾王</span>
+      </div>
+      <p class="text-slate-500 leading-relaxed">全球AI商业机会一站式导航平台，助你发现下一个百万美金AI项目。</p>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3">快速导航</h4>
+      <div class="space-y-2">
+        <a href="#projects" class="block text-slate-400 hover:text-white transition">高收益项目</a>
+        <a href="#ads-spy" class="block text-slate-400 hover:text-white transition">广告间谍</a>
+        <a href="#affiliate" class="block text-slate-400 hover:text-white transition">联盟后台</a>
+        <a href="#ad-spaces" class="block text-slate-400 hover:text-white transition">广告招商</a>
+      </div>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3">商业合作</h4>
+      <div class="space-y-2">
+        <a href="mailto:rao5201@126.com" class="block text-slate-400 hover:text-white transition"><i class="fa-solid fa-envelope mr-1"></i>rao5201@126.com</a>
+        <p class="text-slate-500">广告投放、项目收录、定制开发</p>
+      </div>
+    </div>
+    <div>
+      <h4 class="text-white font-semibold mb-3">常用工具</h4>
+      <div class="space-y-2">
+        <a href="https://www.similarweb.com" target="_blank" class="block text-slate-400 hover:text-white transition">SimilarWeb</a>
+        <a href="https://ahrefs.com" target="_blank" class="block text-slate-400 hover:text-white transition">Ahrefs</a>
+        <a href="https://www.producthunt.com" target="_blank" class="block text-slate-400 hover:text-white transition">Product Hunt</a>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-white/5 flex items-center justify-between flex-wrap gap-4 text-xs text-slate-500">
+    <span>&copy; 2026 茶海虾王 (Chaxia King). All Rights Reserved.</span>
+    <a href="#" onclick="alert('免责声明：本站仅提供信息导航服务，所有项目与工具的效果和收益因人而异。投资有风险，决策需谨慎。');return false;" class="hover:text-white transition">免责声明</a>
+  </div>
+</footer>
+
+<!-- ========== JavaScript ========== -->
+<script>
+/* ================================================================
+ *  茶海虾王 - AI商业机会快速连接 · 全部数据与逻辑
+ * ================================================================ */
+
+// ================== 默认数据定义 ==================
+
+const DEFAULT_PROJECTS = [
+  { id:1, name:"WriteGenius AI", category:"SaaS", mrr:"$125,000+", growth:32, desc:"基于GPT-4o的SEO内容生产引擎，支持50+语言自动生成高排名文章，已帮助2000+品牌提升自然流量。", tags:["SaaS","SEO","内容营销"], icon:"fa-solid fa-pen-nib", link:"https://writegenius.ai", actionText:"立即体验" },
+  { id:2, name:"FaceSwap Pro", category:"API", mrr:"$89,000+", growth:45, desc:"毫秒级人脸替换API，支持视频/图片批量处理，广泛用于短视频创作和电商素材制作。", tags:["API","视频","TikTok"], icon:"fa-solid fa-face-smile", link:"https://faceswappro.com", actionText:"获取API" },
+  { id:3, name:"CodeFix Bot", category:"Plugin", mrr:"$45,000+", growth:28, desc:"VS Code智能修复插件，自动检测Bug并生成修复方案，覆盖Python/JS/Go等20+语言。", tags:["Plugin","开发者","效率"], icon:"fa-solid fa-bug-slash", link:"https://codefix.dev", actionText:"安装插件" },
+  { id:4, name:"VoiceClone Studio", category:"App", mrr:"$210,000+", growth:67, desc:"TikTok爆款声音克隆工具，3秒复制任意人声，支持实时变声和多平台直播。", tags:["APP","TikTok","语音"], icon:"fa-solid fa-microphone-lines", link:"https://voiceclone.studio", actionText:"开始克隆" },
+  { id:5, name:"DataViz AI", category:"SaaS", mrr:"$67,000+", growth:22, desc:"Excel一键生成专业数据看板，支持拖拽编辑和自动洞察，让数据分析零门槛。", tags:["SaaS","数据","效率"], icon:"fa-solid fa-chart-pie", link:"https://dataviz.ai", actionText:"免费试用" },
+  { id:6, name:"LegalMind Assistant", category:"Enterprise", mrr:"$150,000+", growth:38, desc:"AI合同审阅助手，秒级扫描法律风险条款，已服务Fortune 500企业法务部门。", tags:["Enterprise","法律","B2B"], icon:"fa-solid fa-scale-balanced", link:"https://legalmind.ai", actionText:"预约演示" },
+  { id:7, name:"AdCopy AI", category:"SaaS", mrr:"$78,000+", growth:35, desc:"Facebook/Google广告文案自动生成器，内置A/B测试模板和行业最佳实践，提升广告转化率40%。", tags:["SaaS","广告","营销"], icon:"fa-solid fa-bullhorn", link:"https://adcopy.ai", actionText:"生成文案" },
+  { id:8, name:"ResumeBot Pro", category:"App", mrr:"$55,000+", growth:41, desc:"AI简历生成器，根据职位JD智能匹配关键词，支持一键生成多版本简历和求职信。", tags:["APP","求职","效率"], icon:"fa-solid fa-file-lines", link:"https://resumebot.pro", actionText:"制作简历" },
+  { id:9, name:"PhotoEnhance AI", category:"API", mrr:"$92,000+", growth:29, desc:"图片超分辨率API，支持4K/8K无损放大，广泛应用于电商产品图和房产照片增强。", tags:["API","图片","电商"], icon:"fa-solid fa-image", link:"https://photoenhance.ai", actionText:"获取API" },
+  { id:10, name:"ChatBot Builder", category:"SaaS", mrr:"$115,000+", growth:48, desc:"零代码智能客服搭建平台，支持多语言和全渠道部署，平均降低客服成本60%。", tags:["SaaS","客服","零代码"], icon:"fa-solid fa-robot", link:"https://chatbotbuilder.io", actionText:"免费创建" },
+  { id:11, name:"SEO Pilot", category:"SaaS", mrr:"$83,000+", growth:26, desc:"全自动SEO优化平台，智能分析竞品、生成优化方案并监控排名变化，一站式SEO解决方案。", tags:["SaaS","SEO","营销"], icon:"fa-solid fa-compass", link:"https://seopilot.io", actionText:"开始优化" },
+  { id:12, name:"TubeScript AI", category:"App", mrr:"$71,000+", growth:53, desc:"YouTube视频脚本AI生成器，分析热门视频结构并生成高留存率脚本，适合内容创作者。", tags:["APP","YouTube","内容营销"], icon:"fa-brands fa-youtube", link:"https://tubescript.ai", actionText:"写脚本" }
+];
+
+const DEFAULT_ADS = [
+  { id:1, platform:"TikTok", title:"AI换脸神器 - 3秒变明星脸", days:45, likes:"128K", shares:"32K", thumbnail:"https://placehold.co/400x300/1e293b/3b82f6?text=AI+FaceSwap", originalLink:"https://tiktok.com/@faceswappro", landingPage:"https://faceswappro.com/lp-tiktok-v3" },
+  { id:2, platform:"Facebook", title:"AI写作工具让你的博客流量翻10倍", days:62, likes:"85K", shares:"18K", thumbnail:"https://placehold.co/400x300/1e293b/8b5cf6?text=AI+Writer", originalLink:"https://facebook.com/ads/writegenius", landingPage:"https://writegenius.ai/lp-fb-seo" },
+  { id:3, platform:"TikTok", title:"这个AI工具让我月入$50K", days:30, likes:"256K", shares:"67K", thumbnail:"https://placehold.co/400x300/1e293b/ec4899?text=AI+Income", originalLink:"https://tiktok.com/@voiceclone", landingPage:"https://voiceclone.studio/lp-income" },
+  { id:4, platform:"Facebook", title:"律师都在用的AI合同审核工具", days:88, likes:"42K", shares:"9K", thumbnail:"https://placehold.co/400x300/1e293b/22c55e?text=AI+Legal", originalLink:"https://facebook.com/ads/legalmind", landingPage:"https://legalmind.ai/lp-lawyer" },
+  { id:5, platform:"TikTok", title:"用AI做电商图片 - 销量暴增300%", days:21, likes:"189K", shares:"45K", thumbnail:"https://placehold.co/400x300/1e293b/f59e0b?text=AI+Photo", originalLink:"https://tiktok.com/@photoenhance", landingPage:"https://photoenhance.ai/lp-ecommerce" },
+  { id:6, platform:"Facebook", title:"零代码搭建AI客服 - 节省60%人力成本", days:55, likes:"63K", shares:"14K", thumbnail:"https://placehold.co/400x300/1e293b/06b6d4?text=AI+ChatBot", originalLink:"https://facebook.com/ads/chatbotbuilder", landingPage:"https://chatbotbuilder.io/lp-save-cost" }
+];
+
+const DEFAULT_AFFILIATE = [
+  { id:1, name:"Jasper AI", commission:"30% 终身循环佣金", cookie:"90天", assets:"Banner + 邮件模板 + 视频素材", link:"https://jasper.ai/partners", tags:["高佣金"] },
+  { id:2, name:"Midjourney", commission:"20% 首年佣金", cookie:"60天", assets:"创意图片包 + 社媒文案", link:"https://midjourney.com/affiliate", tags:["高佣金"] },
+  { id:3, name:"Notion AI", commission:"50% 首月 + 15% 循环", cookie:"120天", assets:"教程视频 + 对比表格", link:"https://notion.so/affiliates", tags:["高佣金"] },
+  { id:4, name:"Synthesia", commission:"25% 循环佣金", cookie:"90天", assets:"演示视频 + PPT模板", link:"https://synthesia.io/partners", tags:["高佣金"] },
+  { id:5, name:"Copy.ai", commission:"45% 首月佣金", cookie:"60天", assets:"Landing Page模板 + 邮件序列", link:"https://copy.ai/affiliates", tags:["高佣金"] },
+  { id:6, name:"Descript", commission:"15% 终身循环佣金", cookie:"30天", assets:"视频教程 + 社媒素材包", link:"https://descript.com/affiliates", tags:[] },
+  { id:7, name:"Runway ML", commission:"20% 首年佣金", cookie:"45天", assets:"创意素材包 + 案例研究", link:"https://runway.ml/partners", tags:[] },
+  { id:8, name:"ElevenLabs", commission:"22% 终身循环佣金", cookie:"60天", assets:"语音Demo + 推广脚本", link:"https://elevenlabs.io/affiliates", tags:["高佣金"] }
+];
+
+const DEFAULT_ADSLOTS = [
+  { id:1, position:"首页顶部Banner-1", status:"available" },
+  { id:2, position:"首页顶部Banner-2", status:"available" },
+  { id:3, position:"项目列表侧边-1", status:"taken", advertiser:"AI Write Pro", contact:"writepro@ai.com" },
+  { id:4, position:"项目列表侧边-2", status:"available" },
+  { id:5, position:"广告间谍区-1", status:"available" },
+  { id:6, position:"广告间谍区-2", status:"available" },
+  { id:7, position:"联盟后台区-1", status:"available" },
+  { id:8, position:"联盟后台区-2", status:"taken", advertiser:"VideoGen AI", contact:"biz@videogen.ai" },
+  { id:9, position:"工具箱区-1", status:"available" },
+  { id:10, position:"工具箱区-2", status:"available" },
+  { id:11, position:"页脚Banner-1", status:"available" },
+  { id:12, position:"页脚Banner-2", status:"available" }
+];
+
+// ================== 状态管理 ==================
+
+let projectsData, adsData, affiliateData, adSlotsData;
+let currentAdminTab = 'projects';
+
+/** 从localStorage加载数据，若无则使用默认值 */
+function loadFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem('chxw_data');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      projectsData = parsed.projects || [...DEFAULT_PROJECTS];
+      adsData = parsed.ads || [...DEFAULT_ADS];
+      affiliateData = parsed.affiliate || [...DEFAULT_AFFILIATE];
+      adSlotsData = parsed.adSlots || [...DEFAULT_ADSLOTS];
+    } else {
+      resetDataToDefaults();
+    }
+  } catch(e) {
+    resetDataToDefaults();
+  }
+}
+
+/** 重置为默认数据 */
+function resetDataToDefaults() {
+  projectsData = JSON.parse(JSON.stringify(DEFAULT_PROJECTS));
+  adsData = JSON.parse(JSON.stringify(DEFAULT_ADS));
+  affiliateData = JSON.parse(JSON.stringify(DEFAULT_AFFILIATE));
+  adSlotsData = JSON.parse(JSON.stringify(DEFAULT_ADSLOTS));
+}
+
+/** 保存数据到localStorage */
+function saveToLocalStorage() {
+  const data = { projects: projectsData, ads: adsData, affiliate: affiliateData, adSlots: adSlotsData, lastModified: new Date().toISOString() };
+  localStorage.setItem('chxw_data', JSON.stringify(data));
+}
+
+// ================== 渲染函数 ==================
+
+/** 渲染项目卡片 */
+function renderProjects(filterTag) {
+  const grid = document.getElementById('projectsGrid');
+  let items = projectsData;
+  if (filterTag) {
+    items = items.filter(p => p.tags.some(t => t.includes(filterTag)) || p.category.includes(filterTag));
+  }
+  if (items.length === 0) {
+    grid.innerHTML = '<div class="col-span-full text-center text-slate-500 py-12"><i class="fa-solid fa-inbox text-4xl mb-4 block"></i>暂无匹配的项目</div>';
+    return;
+  }
+  grid.innerHTML = items.map(p => `
+    <div class="glass-panel card-hover p-6">
+      <div class="flex items-start justify-between mb-4">
+        <div class="w-12 h-12 rounded-xl bg-blue-600/20 flex items-center justify-center">
+          <i class="${p.icon} text-xl text-blue-400"></i>
+        </div>
+        <span class="text-xs px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 font-medium">${p.category}</span>
+      </div>
+      <h3 class="text-lg font-bold text-white mb-1">${p.name}</h3>
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-green-400 font-bold text-lg">${p.mrr}</span>
+        <span class="text-xs text-green-300 bg-green-500/10 px-2 py-0.5 rounded-full"><i class="fa-solid fa-arrow-trend-up mr-1"></i>+${p.growth}%</span>
+      </div>
+      <p class="text-slate-400 text-sm leading-relaxed mb-4">${p.desc}</p>
+      <div class="flex flex-wrap gap-1.5 mb-4">
+        ${p.tags.map(t => `<span class="text-xs px-2 py-0.5 rounded bg-white/5 text-slate-400">#${t}</span>`).join('')}
+      </div>
+      <a href="${p.link}" target="_blank" class="block text-center btn-glow bg-blue-600/80 hover:bg-blue-500 text-white text-sm py-2.5 rounded-lg font-medium transition">
+        <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>${p.actionText || '了解更多'}
+      </a>
+    </div>
+  `).join('');
+}
+
+/** 渲染广告创意卡片 */
+function renderAds() {
+  const grid = document.getElementById('adsGrid');
+  grid.innerHTML = adsData.map(a => `
+    <div class="glass-panel card-hover overflow-hidden">
+      <div class="relative">
+        <img src="${a.thumbnail}" alt="${a.title}" class="w-full h-48 object-cover">
+        <span class="absolute top-3 left-3 text-xs px-2.5 py-1 rounded-full text-white font-medium ${a.platform === 'TikTok' ? 'badge-tiktok' : 'badge-facebook'}">
+          <i class="${a.platform === 'TikTok' ? 'fa-brands fa-tiktok' : 'fa-brands fa-facebook'} mr-1"></i>${a.platform}
+        </span>
+        <span class="absolute top-3 right-3 text-xs px-2.5 py-1 rounded-full bg-black/60 text-white"><i class="fa-regular fa-clock mr-1"></i>投放 ${a.days} 天</span>
+      </div>
+      <div class="p-5">
+        <h3 class="text-white font-bold mb-2">${a.title}</h3>
+        <div class="flex items-center gap-4 text-sm text-slate-400 mb-3">
+          <span><i class="fa-solid fa-heart text-red-400 mr-1"></i>${a.likes}</span>
+          <span><i class="fa-solid fa-share text-blue-400 mr-1"></i>${a.shares}</span>
+        </div>
+        <div class="text-xs text-slate-500 mb-1">原始链接: <a href="${a.originalLink}" target="_blank" class="text-blue-400 hover:underline truncate inline-block max-w-[200px] align-bottom">${a.originalLink}</a></div>
+        <div class="text-xs text-slate-500 mb-4">落地页: <a href="${a.landingPage}" target="_blank" class="text-purple-400 hover:underline truncate inline-block max-w-[200px] align-bottom">${a.landingPage}</a></div>
+        <div class="flex gap-2">
+          <a href="${a.originalLink}" target="_blank" class="flex-1 text-center bg-white/5 hover:bg-white/10 text-slate-300 text-xs py-2 rounded-lg transition">
+            <i class="fa-solid fa-download mr-1"></i>下载视频
+          </a>
+          <a href="${a.landingPage}" target="_blank" class="flex-1 text-center bg-blue-600/80 hover:bg-blue-500 text-white text-xs py-2 rounded-lg transition">
+            <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>访问落地页
+          </a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/** 渲染联盟计划表 */
+function renderAffiliate() {
+  const tbody = document.getElementById('affiliateTable');
+  tbody.innerHTML = affiliateData.map(a => `
+    <tr class="border-b border-white/5 hover:bg-white/5 transition">
+      <td class="p-4 text-white font-medium">${a.name}</td>
+      <td class="p-4 text-green-400 font-semibold">${a.commission}</td>
+      <td class="p-4 text-slate-300">${a.cookie}</td>
+      <td class="p-4 text-slate-400 text-xs">${a.assets}</td>
+      <td class="p-4">
+        <a href="${a.link}" target="_blank" class="inline-block btn-glow bg-green-600 hover:bg-green-500 text-white text-xs px-4 py-2 rounded-lg font-medium transition">
+          <i class="fa-solid fa-user-plus mr-1"></i>立即注册
+        </a>
+      </td>
+    </tr>
+  `).join('');
+}
+
+/** 渲染广告位 */
+function renderAdSlots() {
+  const grid = document.getElementById('adSlotsGrid');
+  grid.innerHTML = adSlotsData.map(s => {
+    if (s.status === 'taken') {
+      return `<div class="ad-slot-taken rounded-xl p-4 text-center">
+        <i class="fa-solid fa-circle-check text-green-400 text-xl mb-2"></i>
+        <div class="text-xs text-green-300 font-semibold mb-1">席位 #${s.id}</div>
+        <div class="text-xs text-slate-400">${s.advertiser || '已售出'}</div>
+        <div class="text-xs text-slate-500 mt-1">已占用</div>
+      </div>`;
+    }
+    return `<a href="mailto:rao5201@126.com?subject=预订广告位%23${s.id}%20(${encodeURIComponent(s.position)})" class="ad-slot-available rounded-xl p-4 text-center block">
+      <i class="fa-solid fa-plus text-amber-400 text-xl mb-2"></i>
+      <div class="text-xs text-amber-300 font-semibold mb-1">席位 #${s.id}</div>
+      <div class="text-xs text-slate-400">${s.position}</div>
+      <div class="text-xs text-amber-400/70 mt-1">点击预订</div>
+    </a>`;
+  }).join('');
+}
+
+// ================== 搜索与筛选 ==================
+
+/** 全局搜索 */
+function performSearch() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (!query) { renderProjects(''); return; }
+  // 显示加载状态
+  const grid = document.getElementById('projectsGrid');
+  grid.innerHTML = '<div class="col-span-full text-center py-12"><i class="fa-solid fa-spinner spinner text-3xl text-blue-400 mb-4 block"></i><span class="text-slate-400">搜索中...</span></div>';
+  setTimeout(() => {
+    const results = projectsData.filter(p =>
+      p.name.toLowerCase().includes(query) ||
+      p.desc.toLowerCase().includes(query) ||
+      p.tags.some(t => t.toLowerCase().includes(query)) ||
+      p.category.toLowerCase().includes(query)
+    );
+    if (results.length === 0) {
+      grid.innerHTML = '<div class="col-span-full text-center text-slate-500 py-12"><i class="fa-solid fa-magnifying-glass text-4xl mb-4 block"></i>没有找到匹配 "' + query.replace(/</g,'&lt;') + '" 的结果</div>';
+    } else {
+      const origData = projectsData;
+      projectsData = results;
+      renderProjects('');
+      projectsData = origData;
+    }
+    // 滚动到项目区
+    document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+  }, 400);
+}
+
+/** 标签筛选 */
+function filterTags(tag) {
+  // 更新筛选按钮高亮
+  document.querySelectorAll('.filter-tag').forEach(btn => {
+    btn.classList.remove('active');
+    if (!tag && btn.textContent.includes('全部')) btn.classList.add('active');
+    if (tag && (btn.textContent.includes(tag) || btn.getAttribute('onclick')?.includes(`'${tag}'`))) btn.classList.add('active');
+  });
+  renderProjects(tag);
+  document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ================== 管理后台系统 ==================
+
+/** 切换管理后台显示 */
+function toggleAdmin() {
+  const section = document.getElementById('admin');
+  section.classList.toggle('hidden');
+  if (!section.classList.contains('hidden')) {
+    section.scrollIntoView({ behavior: 'smooth' });
+    // 检查是否已登录
+    if (sessionStorage.getItem('chxw_admin') === 'true') {
+      document.getElementById('adminLogin').classList.add('hidden');
+      document.getElementById('adminPanel').classList.remove('hidden');
+      renderAdminContent();
+      updateAdminStats();
+    }
+  }
+}
+
+/** 管理员登录 */
+function adminLoginAction() {
+  const pwd = document.getElementById('adminPwd').value;
+  if (pwd === 'chxw2026') {
+    sessionStorage.setItem('chxw_admin', 'true');
+    document.getElementById('adminLogin').classList.add('hidden');
+    document.getElementById('adminPanel').classList.remove('hidden');
+    document.getElementById('loginError').classList.add('hidden');
+    renderAdminContent();
+    updateAdminStats();
+  } else {
+    document.getElementById('loginError').classList.remove('hidden');
+  }
+}
+
+/** 切换管理标签 */
+function switchAdminTab(tab) {
+  currentAdminTab = tab;
+  document.querySelectorAll('.admin-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-tab') === tab);
+  });
+  renderAdminContent();
+}
+
+/** 渲染管理内容 */
+function renderAdminContent() {
+  const container = document.getElementById('adminContent');
+  switch(currentAdminTab) {
+    case 'projects': renderAdminProjects(container); break;
+    case 'ads': renderAdminAds(container); break;
+    case 'affiliate': renderAdminAffiliate(container); break;
+    case 'adslots': renderAdminAdSlots(container); break;
+    case 'settings': renderAdminSettings(container); break;
+  }
+}
+
+function renderAdminProjects(c) {
+  c.innerHTML = `
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-sm text-slate-400">共 ${projectsData.length} 个项目</span>
+      <button onclick="openAddModal('project')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded-lg"><i class="fa-solid fa-plus mr-1"></i>添加新项目</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-white/10 text-slate-400">
+          <th class="text-left p-2">名称</th><th class="text-left p-2">类别</th><th class="text-left p-2">MRR</th><th class="text-left p-2">增长</th><th class="text-left p-2">操作</th>
+        </tr></thead>
+        <tbody>${projectsData.map(p => `
+          <tr class="border-b border-white/5 hover:bg-white/5">
+            <td class="p-2 text-white">${p.name}</td>
+            <td class="p-2 text-slate-300">${p.category}</td>
+            <td class="p-2 text-green-400">${p.mrr}</td>
+            <td class="p-2 text-slate-300">+${p.growth}%</td>
+            <td class="p-2">
+              <button onclick="editItem('project',${p.id})" class="text-blue-400 hover:text-blue-300 mr-2"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button onclick="deleteItem('project',${p.id})" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `).join('')}</tbody>
+      </table>
+    </div>`;
+}
+
+function renderAdminAds(c) {
+  c.innerHTML = `
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-sm text-slate-400">共 ${adsData.length} 条广告</span>
+      <button onclick="openAddModal('ad')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded-lg"><i class="fa-solid fa-plus mr-1"></i>添加新广告</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-white/10 text-slate-400">
+          <th class="text-left p-2">标题</th><th class="text-left p-2">平台</th><th class="text-left p-2">投放天数</th><th class="text-left p-2">操作</th>
+        </tr></thead>
+        <tbody>${adsData.map(a => `
+          <tr class="border-b border-white/5 hover:bg-white/5">
+            <td class="p-2 text-white max-w-[200px] truncate">${a.title}</td>
+            <td class="p-2 text-slate-300">${a.platform}</td>
+            <td class="p-2 text-slate-300">${a.days}天</td>
+            <td class="p-2">
+              <button onclick="editItem('ad',${a.id})" class="text-blue-400 hover:text-blue-300 mr-2"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button onclick="deleteItem('ad',${a.id})" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `).join('')}</tbody>
+      </table>
+    </div>`;
+}
+
+function renderAdminAffiliate(c) {
+  c.innerHTML = `
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-sm text-slate-400">共 ${affiliateData.length} 个联盟</span>
+      <button onclick="openAddModal('aff')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded-lg"><i class="fa-solid fa-plus mr-1"></i>添加新联盟</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-white/10 text-slate-400">
+          <th class="text-left p-2">名称</th><th class="text-left p-2">佣金</th><th class="text-left p-2">Cookie</th><th class="text-left p-2">操作</th>
+        </tr></thead>
+        <tbody>${affiliateData.map(a => `
+          <tr class="border-b border-white/5 hover:bg-white/5">
+            <td class="p-2 text-white">${a.name}</td>
+            <td class="p-2 text-green-400">${a.commission}</td>
+            <td class="p-2 text-slate-300">${a.cookie}</td>
+            <td class="p-2">
+              <button onclick="editItem('aff',${a.id})" class="text-blue-400 hover:text-blue-300 mr-2"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button onclick="deleteItem('aff',${a.id})" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `).join('')}</tbody>
+      </table>
+    </div>`;
+}
+
+function renderAdminAdSlots(c) {
+  c.innerHTML = `
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-sm text-slate-400">共 ${adSlotsData.length} 个广告位</span>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead><tr class="border-b border-white/10 text-slate-400">
+          <th class="text-left p-2">#</th><th class="text-left p-2">位置</th><th class="text-left p-2">状态</th><th class="text-left p-2">广告主</th><th class="text-left p-2">操作</th>
+        </tr></thead>
+        <tbody>${adSlotsData.map(s => `
+          <tr class="border-b border-white/5 hover:bg-white/5">
+            <td class="p-2 text-white">${s.id}</td>
+            <td class="p-2 text-slate-300">${s.position}</td>
+            <td class="p-2"><span class="px-2 py-0.5 rounded-full text-xs ${s.status==='taken'?'bg-green-500/20 text-green-300':'bg-amber-500/20 text-amber-300'}">${s.status==='taken'?'已售出':'可用'}</span></td>
+            <td class="p-2 text-slate-400">${s.advertiser||'-'}</td>
+            <td class="p-2">
+              <button onclick="toggleSlotStatus(${s.id})" class="text-blue-400 hover:text-blue-300 mr-2 text-xs">${s.status==='taken'?'设为可用':'设为已售'}</button>
+            </td>
+          </tr>
+        `).join('')}</tbody>
+      </table>
+    </div>`;
+}
+
+function renderAdminSettings(c) {
+  c.innerHTML = `
+    <div class="space-y-4">
+      <div class="bg-white/5 rounded-lg p-4">
+        <h4 class="text-white font-semibold mb-2">数据存储</h4>
+        <p class="text-slate-400 text-xs mb-3">所有数据存储在浏览器localStorage中。清除浏览器数据将重置所有内容。</p>
+        <div class="text-xs text-slate-500">存储空间使用: ${(JSON.stringify(localStorage).length / 1024).toFixed(1)} KB</div>
+      </div>
+      <div class="bg-white/5 rounded-lg p-4">
+        <h4 class="text-white font-semibold mb-2">管理操作</h4>
+        <div class="flex gap-2 flex-wrap">
+          <button onclick="exportData()" class="bg-green-600 hover:bg-green-500 text-white text-xs px-4 py-2 rounded-lg"><i class="fa-solid fa-download mr-1"></i>导出全部数据</button>
+          <button onclick="document.getElementById('importFile').click()" class="bg-purple-600 hover:bg-purple-500 text-white text-xs px-4 py-2 rounded-lg"><i class="fa-solid fa-upload mr-1"></i>导入数据文件</button>
+          <button onclick="resetToDefaults();saveToLocalStorage();renderAll();renderAdminContent();showToast('已重置为默认数据')" class="bg-red-600 hover:bg-red-500 text-white text-xs px-4 py-2 rounded-lg"><i class="fa-solid fa-rotate-left mr-1"></i>重置为默认数据</button>
+        </div>
+      </div>
+      <div class="bg-white/5 rounded-lg p-4">
+        <h4 class="text-white font-semibold mb-2">联系方式</h4>
+        <p class="text-slate-400 text-xs">管理员邮箱: rao5201@126.com</p>
+      </div>
+    </div>`;
+}
+
+/** 更新管理后台统计 */
+function updateAdminStats() {
+  const visits = parseInt(localStorage.getItem('chxw_visits') || '0');
+  const emails = JSON.parse(localStorage.getItem('chxw_emails') || '[]');
+  const contacts = JSON.parse(localStorage.getItem('chxw_contacts') || '[]');
+  const saved = localStorage.getItem('chxw_data');
+  let lastMod = '-';
+  if (saved) {
+    try { const d = JSON.parse(saved); if(d.lastModified) lastMod = new Date(d.lastModified).toLocaleDateString('zh-CN'); } catch(e){}
+  }
+  document.getElementById('totalVisits').textContent = visits;
+  document.getElementById('totalEmails').textContent = emails.length;
+  document.getElementById('totalContacts').textContent = contacts.length;
+  document.getElementById('dataModified').textContent = lastMod;
+}
+
+// ================== CRUD操作 ==================
+
+/** 删除项目 */
+function deleteItem(type, id) {
+  if (!confirm('确定要删除吗？')) return;
+  if (type === 'project') projectsData = projectsData.filter(p => p.id !== id);
+  else if (type === 'ad') adsData = adsData.filter(a => a.id !== id);
+  else if (type === 'aff') affiliateData = affiliateData.filter(a => a.id !== id);
+  saveToLocalStorage();
+  renderAll();
+  renderAdminContent();
+  showToast('删除成功');
+}
+
+/** 切换广告位状态 */
+function toggleSlotStatus(id) {
+  const slot = adSlotsData.find(s => s.id === id);
+  if (slot) {
+    if (slot.status === 'taken') {
+      slot.status = 'available';
+      slot.advertiser = '';
+      slot.contact = '';
+    } else {
+      const name = prompt('请输入广告主名称:');
+      if (!name) return;
+      slot.status = 'taken';
+      slot.advertiser = name;
+      slot.contact = prompt('请输入联系方式:') || '';
+    }
+    saveToLocalStorage();
+    renderAll();
+    renderAdminContent();
+    showToast('更新成功');
+  }
+}
+
+/** 打开添加/编辑模态框 */
+function openAddModal(type, editId) {
+  const modal = document.getElementById('modal');
+  const content = document.getElementById('modalContent');
+  let html = '';
+  let isEdit = typeof editId !== 'undefined';
+  let item = null;
+
+  if (type === 'project') {
+    if (isEdit) item = projectsData.find(p => p.id === editId);
+    html = `
+      <h3 class="text-lg font-bold text-white mb-4">${isEdit ? '编辑' : '添加新'}项目</h3>
+      <div class="space-y-3">
+        <input id="f_name" value="${item?.name||''}" placeholder="项目名称" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <select id="f_category" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500 bg-slate-800">
+          ${['SaaS','API','Plugin','App','Enterprise'].map(c => `<option value="${c}" ${item?.category===c?'selected':''}>${c}</option>`).join('')}
+        </select>
+        <input id="f_mrr" value="${item?.mrr||''}" placeholder="MRR (如 $125,000+)" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_growth" value="${item?.growth||''}" type="number" placeholder="月增长率 (%)" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <textarea id="f_desc" placeholder="项目描述(中文)" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500 resize-none">${item?.desc||''}</textarea>
+        <input id="f_tags" value="${item?.tags?.join(',')||''}" placeholder="标签 (逗号分隔)" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_icon" value="${item?.icon||'fa-solid fa-star'}" placeholder="FontAwesome图标类名" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_link" value="${item?.link||''}" placeholder="项目链接" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_action" value="${item?.actionText||'了解更多'}" placeholder="按钮文字" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <div class="flex gap-2 pt-2">
+          <button onclick="saveModalData('project',${isEdit?editId:'null'})" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-lg text-sm font-medium">保存</button>
+          <button onclick="closeModal()" class="flex-1 bg-white/10 hover:bg-white/20 text-slate-300 py-2 rounded-lg text-sm">取消</button>
+        </div>
+      </div>`;
+  } else if (type === 'ad') {
+    if (isEdit) item = adsData.find(a => a.id === editId);
+    html = `
+      <h3 class="text-lg font-bold text-white mb-4">${isEdit ? '编辑' : '添加新'}广告</h3>
+      <div class="space-y-3">
+        <input id="f_title" value="${item?.title||''}" placeholder="广告标题" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <select id="f_platform" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500 bg-slate-800">
+          <option value="TikTok" ${item?.platform==='TikTok'?'selected':''}>TikTok</option>
+          <option value="Facebook" ${item?.platform==='Facebook'?'selected':''}>Facebook</option>
+        </select>
+        <input id="f_days" value="${item?.days||''}" type="number" placeholder="投放天数" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_likes" value="${item?.likes||''}" placeholder="点赞数 (如 128K)" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_shares" value="${item?.shares||''}" placeholder="分享数 (如 32K)" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_thumb" value="${item?.thumbnail||''}" placeholder="缩略图URL" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_origLink" value="${item?.originalLink||''}" placeholder="原始链接" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_landing" value="${item?.landingPage||''}" placeholder="落地页URL" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <div class="flex gap-2 pt-2">
+          <button onclick="saveModalData('ad',${isEdit?editId:'null'})" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-lg text-sm font-medium">保存</button>
+          <button onclick="closeModal()" class="flex-1 bg-white/10 hover:bg-white/20 text-slate-300 py-2 rounded-lg text-sm">取消</button>
+        </div>
+      </div>`;
+  } else if (type === 'aff') {
+    if (isEdit) item = affiliateData.find(a => a.id === editId);
+    html = `
+      <h3 class="text-lg font-bold text-white mb-4">${isEdit ? '编辑' : '添加新'}联盟计划</h3>
+      <div class="space-y-3">
+        <input id="f_name" value="${item?.name||''}" placeholder="项目名称" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_commission" value="${item?.commission||''}" placeholder="佣金结构" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_cookie" value="${item?.cookie||''}" placeholder="Cookie周期" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_assets" value="${item?.assets||''}" placeholder="推广素材包" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <input id="f_link" value="${item?.link||''}" placeholder="注册链接" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500">
+        <div class="flex gap-2 pt-2">
+          <button onclick="saveModalData('aff',${isEdit?editId:'null'})" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-lg text-sm font-medium">保存</button>
+          <button onclick="closeModal()" class="flex-1 bg-white/10 hover:bg-white/20 text-slate-300 py-2 rounded-lg text-sm">取消</button>
+        </div>
+      </div>`;
+  }
+  content.innerHTML = html;
+  modal.classList.add('active');
+}
+
+/** 编辑项 */
+function editItem(type, id) {
+  openAddModal(type, id);
+}
+
+/** 保存模态框数据 */
+function saveModalData(type, editId) {
+  if (type === 'project') {
+    const obj = {
+      id: editId || (projectsData.length ? Math.max(...projectsData.map(p=>p.id)) + 1 : 1),
+      name: document.getElementById('f_name').value,
+      category: document.getElementById('f_category').value,
+      mrr: document.getElementById('f_mrr').value,
+      growth: parseInt(document.getElementById('f_growth').value) || 0,
+      desc: document.getElementById('f_desc').value,
+      tags: document.getElementById('f_tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+      icon: document.getElementById('f_icon').value,
+      link: document.getElementById('f_link').value,
+      actionText: document.getElementById('f_action').value
+    };
+    if (!obj.name) { alert('请填写项目名称'); return; }
+    if (editId) { const idx = projectsData.findIndex(p=>p.id===editId); if(idx>=0) projectsData[idx] = obj; }
+    else projectsData.push(obj);
+  } else if (type === 'ad') {
+    const obj = {
+      id: editId || (adsData.length ? Math.max(...adsData.map(a=>a.id)) + 1 : 1),
+      platform: document.getElementById('f_platform').value,
+      title: document.getElementById('f_title').value,
+      days: parseInt(document.getElementById('f_days').value) || 0,
+      likes: document.getElementById('f_likes').value,
+      shares: document.getElementById('f_shares').value,
+      thumbnail: document.getElementById('f_thumb').value || 'https://placehold.co/400x300/1e293b/3b82f6?text=AD',
+      originalLink: document.getElementById('f_origLink').value,
+      landingPage: document.getElementById('f_landing').value
+    };
+    if (!obj.title) { alert('请填写广告标题'); return; }
+    if (editId) { const idx = adsData.findIndex(a=>a.id===editId); if(idx>=0) adsData[idx] = obj; }
+    else adsData.push(obj);
+  } else if (type === 'aff') {
+    const obj = {
+      id: editId || (affiliateData.length ? Math.max(...affiliateData.map(a=>a.id)) + 1 : 1),
+      name: document.getElementById('f_name').value,
+      commission: document.getElementById('f_commission').value,
+      cookie: document.getElementById('f_cookie').value,
+      assets: document.getElementById('f_assets').value,
+      link: document.getElementById('f_link').value,
+      tags: []
+    };
+    if (!obj.name) { alert('请填写名称'); return; }
+    if (editId) { const idx = affiliateData.findIndex(a=>a.id===editId); if(idx>=0) affiliateData[idx] = obj; }
+    else affiliateData.push(obj);
+  }
+  saveToLocalStorage();
+  closeModal();
+  renderAll();
+  renderAdminContent();
+  showToast(editId ? '更新成功' : '添加成功');
+}
+
+/** 关闭模态框 */
+function closeModal() {
+  document.getElementById('modal').classList.remove('active');
+}
+
+// ================== 数据导入导出 ==================
+
+/** 导出数据为JSON文件 */
+function exportData() {
+  const data = { projects: projectsData, ads: adsData, affiliate: affiliateData, adSlots: adSlotsData, exportDate: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `chxw_data_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('数据导出成功');
+}
+
+/** 导入JSON数据 */
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (data.projects) projectsData = data.projects;
+      if (data.ads) adsData = data.ads;
+      if (data.affiliate) affiliateData = data.affiliate;
+      if (data.adSlots) adSlotsData = data.adSlots;
+      saveToLocalStorage();
+      renderAll();
+      renderAdminContent();
+      showToast('数据导入成功');
+    } catch(err) {
+      alert('导入失败：文件格式不正确');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+/** 重置为默认数据 */
+function resetToDefaults() {
+  if (!confirm('确定要重置所有数据为默认值吗？此操作不可撤销。')) return;
+  resetDataToDefaults();
+  saveToLocalStorage();
+  renderAll();
+  if (document.getElementById('adminPanel') && !document.getElementById('adminPanel').classList.contains('hidden')) {
+    renderAdminContent();
+  }
+  showToast('已重置为默认数据');
+}
+
+// ================== 邮件订阅与联系表单 ==================
+
+/** 收集邮件订阅 */
+function collectEmail() {
+  const input = document.getElementById('newsletterEmail');
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) {
+    showToast('请输入有效的邮箱地址', 'error');
+    return;
+  }
+  const emails = JSON.parse(localStorage.getItem('chxw_emails') || '[]');
+  if (emails.includes(email)) {
+    showToast('该邮箱已订阅', 'info');
+    return;
+  }
+  emails.push(email);
+  localStorage.setItem('chxw_emails', JSON.stringify(emails));
+  input.value = '';
+  showToast('订阅成功！每周将收到AI商业周报');
+}
+
+/** 提交联系表单 */
+function submitContact() {
+  const name = document.getElementById('contactName').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  const msg = document.getElementById('contactMsg').value.trim();
+  if (!name || !email || !msg) {
+    showToast('请填写完整信息', 'error');
+    return;
+  }
+  const contacts = JSON.parse(localStorage.getItem('chxw_contacts') || '[]');
+  contacts.push({ name, email, msg, date: new Date().toISOString() });
+  localStorage.setItem('chxw_contacts', JSON.stringify(contacts));
+  document.getElementById('contactName').value = '';
+  document.getElementById('contactEmail').value = '';
+  document.getElementById('contactMsg').value = '';
+  showToast('消息已发送，我们将尽快回复！');
+}
+
+// ================== 工具函数 ==================
+
+/** 显示Toast通知 */
+function showToast(msg, type) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.style.background = type === 'error' ? 'rgba(239,68,68,0.9)' : type === 'info' ? 'rgba(59,130,246,0.9)' : 'rgba(34,197,94,0.9)';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+/** 渲染全部内容 */
+function renderAll() {
+  renderProjects('');
+  renderAds();
+  renderAffiliate();
+  renderAdSlots();
+}
+
+/** 访客计数器 */
+function incrementVisitor() {
+  const count = parseInt(localStorage.getItem('chxw_visits') || '0') + 1;
+  localStorage.setItem('chxw_visits', String(count));
+}
+
+// ================== 初始化 ==================
+
+document.addEventListener('DOMContentLoaded', function() {
+  // 加载数据
+  loadFromLocalStorage();
+  // 渲染全部
+  renderAll();
+  // 访客计数
+  incrementVisitor();
+  // 点击模态框外部关闭
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+});
+</script>
+
+</body>
+</html>
