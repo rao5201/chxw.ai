@@ -1,59 +1,59 @@
--- 茶海虾王 初始数据填充
+-- 茶海虾王 初始数据填充 (2026年5月更新版)
 -- 请在 schema.sql 执行完毕后运行此脚本
 
 -- ============================================
--- 1. 项目数据 (12个AI高收益项目)
+-- 1. 项目数据 (12个AI高收益项目 - 2025/2026)
 -- ============================================
 INSERT INTO projects (name, category, mrr, growth, description, tags, icon, link, action_text, sort_order) VALUES
-('WriteGenius AI', 'SaaS', '$125,000+', '32', '基于GPT-4o的SEO内容生产引擎，支持50+语言自动生成高排名文章，已帮助2000+品牌提升自然流量。', ARRAY['SaaS','SEO','内容营销'], 'fa-solid fa-pen-nib', 'https://writegenius.ai', '立即体验', 1),
-('FaceSwap Pro', 'API', '$89,000+', '45', '毫秒级人脸替换API，支持视频/图片批量处理，广泛用于短视频创作和电商素材制作。', ARRAY['API','视频','TikTok'], 'fa-solid fa-face-smile', 'https://faceswappro.com', '获取API', 2),
-('CodeFix Bot', 'Plugin', '$45,000+', '28', 'VS Code智能修复插件，自动检测Bug并生成修复方案，覆盖Python/JS/Go等20+语言。', ARRAY['Plugin','开发者','效率'], 'fa-solid fa-bug-slash', 'https://codefix.dev', '安装插件', 3),
-('VoiceClone Studio', 'App', '$210,000+', '67', 'TikTok爆款声音克隆工具，3秒复制任意人声，支持实时变声和多平台直播。', ARRAY['APP','TikTok','语音'], 'fa-solid fa-microphone-lines', 'https://voiceclone.studio', '开始克隆', 4),
-('DataViz AI', 'SaaS', '$67,000+', '22', 'Excel一键生成专业数据看板，支持拖拽编辑和自动洞察，让数据分析零门槛。', ARRAY['SaaS','数据','效率'], 'fa-solid fa-chart-pie', 'https://dataviz.ai', '免费试用', 5),
-('LegalMind Assistant', 'Enterprise', '$150,000+', '38', 'AI合同审阅助手，秒级扫描法律风险条款，已服务Fortune 500企业法务部门。', ARRAY['Enterprise','法律','B2B'], 'fa-solid fa-scale-balanced', 'https://legalmind.ai', '预约演示', 6),
-('AdCopy AI', 'SaaS', '$78,000+', '35', 'Facebook/Google广告文案自动生成器，内置A/B测试模板和行业最佳实践，提升广告转化率40%。', ARRAY['SaaS','广告','营销'], 'fa-solid fa-bullhorn', 'https://adcopy.ai', '生成文案', 7),
-('ResumeBot Pro', 'App', '$55,000+', '41', 'AI简历生成器，根据职位JD智能匹配关键词，支持一键生成多版本简历和求职信。', ARRAY['APP','求职','效率'], 'fa-solid fa-file-lines', 'https://resumebot.pro', '制作简历', 8),
-('PhotoEnhance AI', 'API', '$92,000+', '29', '图片超分辨率API，支持4K/8K无损放大，广泛应用于电商产品图和房产照片增强。', ARRAY['API','图片','电商'], 'fa-solid fa-image', 'https://photoenhance.ai', '获取API', 9),
-('ChatBot Builder', 'SaaS', '$115,000+', '48', '零代码智能客服搭建平台，支持多语言和全渠道部署，平均降低客服成本60%。', ARRAY['SaaS','客服','零代码'], 'fa-solid fa-robot', 'https://chatbotbuilder.io', '免费创建', 10),
-('SEO Pilot', 'SaaS', '$83,000+', '26', '全自动SEO优化平台，智能分析竞品、生成优化方案并监控排名变化，一站式SEO解决方案。', ARRAY['SaaS','SEO','营销'], 'fa-solid fa-compass', 'https://seopilot.io', '开始优化', 11),
-('TubeScript AI', 'App', '$71,000+', '53', 'YouTube视频脚本AI生成器，分析热门视频结构并生成高留存率脚本，适合内容创作者。', ARRAY['APP','YouTube','内容营销'], 'fa-brands fa-youtube', 'https://tubescript.ai', '写脚本', 12);
+('Cursor', 'SaaS', '$180,000', '55', '基于AI的下一代代码编辑器，集成GPT-4o与Claude，支持代码补全、重构和自然语言编程，程序员效率提升10倍。', ARRAY['IDE','开发者','效率'], 'fa-solid fa-code', 'https://cursor.com', '立即体验', 1),
+('Perplexity AI', 'SaaS', '$350,000', '42', 'AI驱动的答案引擎，取代传统搜索引擎，实时联网检索+AI总结，用户已超1亿。', ARRAY['搜索','AI助手'], 'fa-solid fa-magnifying-glass', 'https://perplexity.ai', '立即体验', 2),
+('Midjourney v7', 'App', '$520,000', '18', 'AI图像生成领域王者，v7版本支持视频生成和3D建模，设计师和创作者必备神器。', ARRAY['图像','创意'], 'fa-solid fa-palette', 'https://midjourney.com', '开始创作', 3),
+('ElevenLabs', 'API', '$280,000', '63', '全球领先的AI语音平台，支持声音克隆、多语言TTS、实时配音，广泛用于内容创作和影视后期。', ARRAY['语音','TTS'], 'fa-solid fa-microphone', 'https://elevenlabs.io', '获取API', 4),
+('Gamma', 'SaaS', '$95,000', '71', 'AI演示文稿生成器，一句话生成精美PPT，支持实时协作和自定义模板，告别枯燥设计。', ARRAY['演示','效率'], 'fa-solid fa-presentation-screen', 'https://gamma.app', '免费试用', 5),
+('Lovable', 'SaaS', '$160,000', '88', 'AI全栈应用构建器，用自然语言描述需求即可生成完整Web应用，零代码创业神器。', ARRAY['零代码','全栈'], 'fa-solid fa-heart', 'https://lovable.dev', '开始构建', 6),
+('Bolt.new', 'SaaS', '$140,000', '76', 'StackBlitz推出的AI Web开发工具，浏览器内直接编码部署，支持全栈框架一键生成。', ARRAY['Web开发','在线IDE'], 'fa-solid fa-bolt', 'https://bolt.new', '立即体验', 7),
+('Suno AI', 'App', '$210,000', '45', 'AI音乐生成平台，输入文字即可创作完整歌曲，支持多风格和人声，TikTok爆款音乐神器。', ARRAY['音乐','创作'], 'fa-solid fa-music', 'https://suno.com', '开始创作', 8),
+('HeyGen', 'API', '$320,000', '52', 'AI数字人视频平台，上传照片即可生成逼真虚拟主播视频，支持100+语言和多平台投放。', ARRAY['数字人','视频'], 'fa-solid fa-video', 'https://heygen.com', '制作视频', 9),
+('Replit Agent', 'SaaS', '$120,000', '67', 'AI编程代理，用自然语言描述需求，自动生成、调试和部署完整应用，编程小白也能做产品。', ARRAY['Agent','编程'], 'fa-solid fa-terminal', 'https://replit.com', '开始使用', 10),
+('Devin AI', 'Enterprise', '$250,000', '93', '全球首个自主AI软件工程师，可独立完成需求分析、编码、测试和部署，企业级编程新范式。', ARRAY['AI工程师','B2B'], 'fa-solid fa-robot', 'https://devin.ai', '预约演示', 11),
+('NotebookLM', 'App', '$0', '200', 'Google推出的AI研究助手，上传文档自动生成播客、摘要和问答，学生和研究者的效率倍增器。', ARRAY['研究','播客'], 'fa-solid fa-book-open', 'https://notebooklm.google', '免费使用', 12);
 
 -- ============================================
--- 2. 广告创意数据 (6条广告)
+-- 2. 广告创意数据 (6条广告 - 2026更新)
 -- ============================================
 INSERT INTO ads (platform, title, likes, shares, days_running, thumbnail, original_link, final_landing) VALUES
-('TikTok', 'AI换脸神器 - 3秒变明星脸', '128K', '32K', 45, 'https://placehold.co/400x300/1e293b/3b82f6?text=AI+FaceSwap', 'https://tiktok.com/@faceswappro', 'https://faceswappro.com/lp-tiktok-v3'),
-('Facebook', 'AI写作工具让你的博客流量翻10倍', '85K', '18K', 62, 'https://placehold.co/400x300/1e293b/8b5cf6?text=AI+Writer', 'https://facebook.com/ads/writegenius', 'https://writegenius.ai/lp-fb-seo'),
-('TikTok', '这个AI工具让我月入$50K', '256K', '67K', 30, 'https://placehold.co/400x300/1e293b/ec4899?text=AI+Income', 'https://tiktok.com/@voiceclone', 'https://voiceclone.studio/lp-income'),
-('Facebook', '律师都在用的AI合同审核工具', '42K', '9K', 88, 'https://placehold.co/400x300/1e293b/22c55e?text=AI+Legal', 'https://facebook.com/ads/legalmind', 'https://legalmind.ai/lp-lawyer'),
-('TikTok', '用AI做电商图片 - 销量暴增300%', '189K', '45K', 21, 'https://placehold.co/400x300/1e293b/f59e0b?text=AI+Photo', 'https://tiktok.com/@photoenhance', 'https://photoenhance.ai/lp-ecommerce'),
-('Facebook', '零代码搭建AI客服 - 节省60%人力成本', '63K', '14K', 55, 'https://placehold.co/400x300/1e293b/06b6d4?text=AI+ChatBot', 'https://facebook.com/ads/chatbotbuilder', 'https://chatbotbuilder.io/lp-save-cost');
+('TikTok', '程序员效率提升10倍 - Cursor AI', '89K', '23K', 38, 'https://placehold.co/400x220/0c1529/00e5a0?text=Cursor+AI', 'https://tiktok.com/@cursor', 'https://cursor.com/lp-tiktok'),
+('YouTube', 'Google替代品来了 - Perplexity搜索革命', '125K', '34K', 52, 'https://placehold.co/400x220/0c1529/a855f7?text=Perplexity', 'https://youtube.com/@perplexity', 'https://perplexity.ai/lp-yt'),
+('TikTok', '用AI复制任何人的声音 - ElevenLabs', '234K', '67K', 25, 'https://placehold.co/400x220/0c1529/ec4899?text=ElevenLabs', 'https://tiktok.com/@elevenlabs', 'https://elevenlabs.io/lp-clone'),
+('Facebook', 'PPT自动生成 - Gamma AI演示', '42K', '11K', 44, 'https://placehold.co/400x220/0c1529/22c55e?text=Gamma+PPT', 'https://facebook.com/ads/gamma', 'https://gamma.app/lp-fb'),
+('TikTok', '不写代码也能做APP - Lovable全栈开发', '112K', '29K', 18, 'https://placehold.co/400x220/0c1529/00a8ff?text=Lovable', 'https://tiktok.com/@lovable', 'https://lovable.dev/lp-tiktok'),
+('TikTok', 'AI作曲30秒出歌 - Suno音乐创作', '178K', '45K', 33, 'https://placehold.co/400x220/0c1529/f59e0b?text=Suno+AI', 'https://tiktok.com/@sunoai', 'https://suno.com/lp-music');
 
 -- ============================================
--- 3. 联盟计划数据 (8个联盟)
+-- 3. 联盟计划数据 (8个联盟 - 2026更新)
 -- ============================================
 INSERT INTO affiliates (name, commission, cookie_period, assets, link, sort_order) VALUES
-('Jasper AI', '30% 终身循环佣金', '90天', 'Banner + 邮件模板 + 视频素材', 'https://jasper.ai/partners', 1),
-('Midjourney', '20% 首年佣金', '60天', '创意图片包 + 社媒文案', 'https://midjourney.com/affiliate', 2),
-('Notion AI', '50% 首月 + 15% 循环', '120天', '教程视频 + 对比表格', 'https://notion.so/affiliates', 3),
-('Synthesia', '25% 循环佣金', '90天', '演示视频 + PPT模板', 'https://synthesia.io/partners', 4),
-('Copy.ai', '45% 首月佣金', '60天', 'Landing Page模板 + 邮件序列', 'https://copy.ai/affiliates', 5),
-('Descript', '15% 终身循环佣金', '30天', '视频教程 + 社媒素材包', 'https://descript.com/affiliates', 6),
-('Runway ML', '20% 首年佣金', '45天', '创意素材包 + 案例研究', 'https://runway.ml/partners', 7),
-('ElevenLabs', '22% 终身循环佣金', '60天', '语音Demo + 推广脚本', 'https://elevenlabs.io/affiliates', 8);
+('Cursor Pro', '25% 循环佣金', '60天', 'Banner + 教程视频 + 代码Demo', 'https://cursor.com/affiliates', 1),
+('Perplexity Pro', '20% 循环佣金', '90天', '对比图表 + 邮件模板 + 社媒文案', 'https://perplexity.ai/affiliates', 2),
+('Midjourney', '15% 首年佣金', '45天', '创意图片包 + 社媒文案', 'https://midjourney.com/affiliate', 3),
+('ElevenLabs', '22% 终身循环佣金', '60天', '语音Demo + 推广脚本 + 视频素材', 'https://elevenlabs.io/affiliates', 4),
+('Gamma Pro', '30% 前3月佣金', '90天', 'PPT模板 + 教程视频 + 对比表格', 'https://gamma.app/affiliates', 5),
+('HeyGen', '20% 循环佣金', '60天', '演示视频 + Landing Page模板', 'https://heygen.com/affiliates', 6),
+('Suno Pro', '25% 首年佣金', '30天', '音乐Demo + 创作教程 + 邮件序列', 'https://suno.com/affiliates', 7),
+('Jasper AI', '30% 终身循环佣金', '90天', 'Banner + 邮件模板 + 视频素材', 'https://jasper.ai/partners', 8);
 
 -- ============================================
--- 4. 广告位数据 (12个席位，#3和#8已售)
+-- 4. 广告位数据 (12个席位)
 -- ============================================
 INSERT INTO ad_slots (slot_number, status, advertiser_name, contact_email) VALUES
 (1, 'available', NULL, NULL),
 (2, 'available', NULL, NULL),
-(3, 'taken', 'AI Write Pro', 'writepro@ai.com'),
+(3, 'available', NULL, NULL),
 (4, 'available', NULL, NULL),
 (5, 'available', NULL, NULL),
 (6, 'available', NULL, NULL),
 (7, 'available', NULL, NULL),
-(8, 'taken', 'VideoGen AI', 'biz@videogen.ai'),
+(8, 'available', NULL, NULL),
 (9, 'available', NULL, NULL),
 (10, 'available', NULL, NULL),
 (11, 'available', NULL, NULL),
@@ -64,10 +64,10 @@ INSERT INTO ad_slots (slot_number, status, advertiser_name, contact_email) VALUE
 -- ============================================
 INSERT INTO site_settings (key, value) VALUES
 ('site_name', '茶海虾王'),
-('admin_password', 'chxw2026'),
 ('contact_email', 'rao5201@126.com'),
 ('site_description', 'AI商业机会快速连接平台'),
-('newsletter_enabled', 'true');
+('newsletter_enabled', 'true'),
+('data_updated_at', '2026-05-10');
 
 -- ============================================
 -- 6. 初始访客统计

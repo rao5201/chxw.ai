@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.SUPABASE_URL || 'YOUR_SUPABASE_URL'
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'YOUR_SUPABASE_ANON_KEY'
+const supabaseUrl = process.env.SUPABASE_URL || 'https://rtrxtlerbvmdtdsvgzve.supabase.co'
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || ''
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || ''
 
 // 公开客户端 (受 RLS 限制)

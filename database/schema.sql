@@ -25,7 +25,7 @@ CREATE TABLE projects (
 -- 2. 广告创意表
 CREATE TABLE ads (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-  platform VARCHAR(20) NOT NULL CHECK (platform IN ('TikTok', 'Facebook', 'Instagram', 'Google')),
+  platform VARCHAR(20) NOT NULL CHECK (platform IN ('TikTok', 'Facebook', 'Instagram', 'Google', 'YouTube')),
   title VARCHAR(200) NOT NULL,
   likes VARCHAR(20),
   shares VARCHAR(20),
